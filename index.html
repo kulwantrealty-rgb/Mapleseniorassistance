@@ -763,7 +763,7 @@ function buildApp(u){
   document.getElementById('uName').textContent=u.name;
   const rb=document.getElementById('uRb');rb.textContent=u.role.charAt(0).toUpperCase()+u.role.slice(1);rb.className='rb '+u.role;
   const nav=document.getElementById('navSec');nav.innerHTML='';
-  NAV[u.role].forEach(s=>{nav.innerHTML+=`<div class="nav-lbl">${s.l}</div>`;s.i.forEach(item=>{nav.innerHTML+=`<div class="ni" onclick="showPage('${item.p}',this);closeSB()"><span class="ic">${item.ic}</span>${item.t}</div>`;});});
+  NAV[u.role].forEach(s=>{nav.innerHTML+=`<div class="nav-lbl">${s.l}</div>`;s.i.forEach(item=>{nav.innerHTML+=`<div class="ni" data-page="${item.p}"><span class="ic">${item.ic}</span>${item.t}</div>`;});});
   document.getElementById('todayDate').textContent=new Date().toLocaleDateString('en-CA',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
   populateDDs();
   const fp=NAV[u.role][0].i[0].p;
@@ -1124,6 +1124,14 @@ function closeM(n){document.getElementById('mo-'+n).classList.remove('open');}
 document.addEventListener('DOMContentLoaded',function(){
 document.querySelectorAll('.mo').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');});});
 initMob();
+// Delegated nav handler - more reliable than inline onclick on some mobile browsers,
+// since it's bound once to a permanent element instead of being re-injected via innerHTML.
+document.getElementById('navSec').addEventListener('click',e=>{
+  const item=e.target.closest('.ni');
+  if(!item)return;
+  showPage(item.dataset.page,item);
+  closeSB();
+});
 checkRecovery();
 // Auto sign-in if a valid Supabase session already exists (e.g. page refresh)
 sbAuth.auth.getSession().then(async({data})=>{
