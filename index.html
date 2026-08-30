@@ -56,7 +56,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 .sb-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:149;}
 #app{display:none;min-height:100vh;background:var(--bg);}
 .app-lay{display:flex;min-height:100vh;max-width:1680px;margin:0 auto;position:relative;transform:translateZ(0);background:var(--bg);}
-.sb{width:var(--sw);background:var(--navy);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:150;transition:transform .25s;overflow-y:auto;}
+.sb{width:var(--sw);background:var(--navy);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:1000;transition:transform .25s;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 .sb-hdr{padding:18px 15px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0;}
 .sb-logo{display:flex;align-items:center;gap:8px;}
 .sb-logo .lf{font-size:18px;}
@@ -278,7 +278,7 @@ tr:hover td{background:#fafbff;}
 </head>
 <body>
 <button class="hbg" id="hbg" onclick="toggleSB()" style="display:none"><span></span><span></span><span></span></button>
-<div class="sb-ov" id="sbOv" onclick="closeSB()"></div>
+<div class="sb-ov" id="sbOv" onclick="alert('DEBUG: the background overlay caught this tap (this means the overlay is sitting on top of the menu)');closeSB()"></div>
 
 <!-- LOGIN -->
 <div id="loginSc" class="auth-wrap">
